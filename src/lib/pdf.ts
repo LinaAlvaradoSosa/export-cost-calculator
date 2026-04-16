@@ -1,4 +1,5 @@
 import type { CalculationTotals, FormData } from "@/hooks/useExportCalculator";
+import { formatMoney, formatPercent, parseMoney } from "@/lib/currency";
 
 type PdfDocument = InstanceType<typeof import("jspdf").default>;
 type AutoTable = typeof import("jspdf-autotable").default;
@@ -6,7 +7,9 @@ type AutoTable = typeof import("jspdf-autotable").default;
 export interface PdfCostRow {
   label: string;
   value: number;
+  lotValue: number;
   pct: number;
+  basis: "unit" | "lot";
 }
 
 interface ExportCalculationPdfParams {
@@ -15,16 +18,10 @@ interface ExportCalculationPdfParams {
   rows: PdfCostRow[];
 }
 
-const fmtMoney = (value: number) =>
-  `$${value.toLocaleString("es-CO", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })} USD`;
-
 const fmtText = (value: string, fallback = "Sin especificar") =>
   value.trim() || fallback;
 
-const fmtInputMoney = (value: string) => fmtMoney(Number.parseFloat(value) || 0);
+const fmtInputMoney = (value: string) => formatMoney(parseMoney(value));
 
 const slugify = (value: string) =>
   value
@@ -90,6 +87,7 @@ export async function exportCalculationPdf({ form, calc, rows }: ExportCalculati
       ["Producto", fmtText(form.producto)],
       ["Categoria", form.categoria === "moda" ? "Moda" : "Belleza"],
       ["Modelo logistico", form.modelo],
+      ["Moneda", "USD"],
       ["Unidades", String(calc.units)],
     ],
     y,
@@ -100,8 +98,8 @@ export async function exportCalculationPdf({ form, calc, rows }: ExportCalculati
     doc,
     "Resultado",
     [
-      ["Costo total por lote", fmtMoney(calc.totalLote)],
-      ["Costo unitario final", fmtMoney(calc.totalUnitario)],
+      ["Costo total por lote", formatMoney(calc.totalLote)],
+      ["Costo unitario final", formatMoney(calc.totalUnitario)],
       ["Precio ref. venta", fmtInputMoney(form.precioReferencia)],
       ["Margen estimado", `${calc.margen.toFixed(1)}%`],
     ],
@@ -113,8 +111,10 @@ export async function exportCalculationPdf({ form, calc, rows }: ExportCalculati
     doc,
     "Distribucion de costos",
     rows.map((row) => [
-      row.label,
-      `${fmtMoney(row.value)} (${row.pct.toFixed(0)}%)`,
+      `${row.label} (${row.basis === "lot" ? "por lote" : "por unidad"})`,
+      row.basis === "lot"
+        ? `${formatMoney(row.value)} por unidad / ${formatMoney(row.lotValue)} por lote (${formatPercent(row.pct)})`
+        : `${formatMoney(row.value)} por unidad (${formatPercent(row.pct)})`,
     ]),
     y + 8,
   );

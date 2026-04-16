@@ -110,4 +110,44 @@ describe("Calculadora de exportación", () => {
     expect(result.pctProducto).toBeCloseTo(50, 10);
     expect(result.pctExportacion).toBeCloseTo(50, 10);
 });
+
+    it("mantiene separados los subtotales por lote y por unidad", () => {
+        const form: FormData = {
+        ...initialData,
+        costoUnitario: "10",
+        empaqueUnitario: "1",
+        unidades: "500",
+        fedex: "1",
+        transporteInt: "1",
+        seguros: "1",
+        aranceles: "1",
+        nacionalizacion: "1",
+        agenciaAduana: "1",
+        otrosExportacion: "1",
+    };
+
+    const result = calculateTotals(form);
+
+    expect(result.subtotalProducto).toBe(11);
+    expect(result.subtotalProductoLote).toBe(5500);
+    expect(result.subtotalExportacionLote).toBe(7);
+    expect(result.subtotalExportacion).toBeCloseTo(0.014, 10);
+});
+
+    it("prorratea la logística USA por lote entre las unidades", () => {
+        const form: FormData = {
+        ...initialData,
+        unidades: "100",
+        almacenamiento: "100",
+        pickingPacking: "50",
+        inbound: "50",
+    };
+
+    const result = calculateTotals(form);
+
+    expect(result.subtotalLogisticaLote).toBe(200);
+    expect(result.subtotalLogistica).toBe(2);
+    expect(result.totalUnitario).toBe(2);
+    expect(result.totalLote).toBe(200);
+});
 });

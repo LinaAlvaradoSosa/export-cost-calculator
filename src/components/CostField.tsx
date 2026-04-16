@@ -4,7 +4,9 @@ interface CostFieldProps {
   value: string;
   onChange: (v: string) => void;
   prefix?: string;
+  suffix?: string;
   placeholder?: string;
+  helperText?: string;
 }
 
 export default function CostField({
@@ -13,7 +15,9 @@ export default function CostField({
   value,
   onChange,
   prefix = "$",
+  suffix,
   placeholder = "0",
+  helperText,
 }: CostFieldProps) {
   const inputId =
     id ??
@@ -38,12 +42,18 @@ export default function CostField({
           type="number"
           min="0"
           step="any"
-          className="field-input pl-7"
+          className={`field-input pl-7 ${suffix ? "pr-14" : ""}`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
         />
+        {suffix && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs font-semibold">
+            {suffix}
+          </span>
+        )}
       </div>
+      {helperText && <p className="mt-1 text-[11px] leading-snug text-muted-foreground">{helperText}</p>}
     </div>
   );
 }

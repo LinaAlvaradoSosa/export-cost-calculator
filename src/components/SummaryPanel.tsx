@@ -1,10 +1,13 @@
 import { FileDown, RotateCcw } from "lucide-react";
+import { formatMoney, formatPercent } from "@/lib/currency";
 
 interface CostRow {
   label: string;
   value: number;
+  lotValue: number;
   pct: number;
   color: string;
+  basis: "unit" | "lot";
 }
 
 interface SummaryPanelProps {
@@ -15,9 +18,6 @@ interface SummaryPanelProps {
   onReset: () => void;
   onExportPdf: () => void;
 }
-
-const fmt = (v: number) =>
-  v.toLocaleString("es-CO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export default function SummaryPanel({
   totalLote,
@@ -37,13 +37,13 @@ export default function SummaryPanel({
         <div>
           <p className="text-xs opacity-70 uppercase tracking-wider">Costo Total por Lote</p>
           <p className="text-3xl font-extrabold mt-1">
-            ${fmt(totalLote)} <span className="text-sm font-normal opacity-70">USD</span>
+            {formatMoney(totalLote)}
           </p>
         </div>
         <div className="flex items-end justify-between">
           <div>
             <p className="text-xs opacity-70 uppercase tracking-wider">Costo Unitario Final</p>
-            <p className="text-2xl font-bold">${fmt(totalUnitario)}</p>
+            <p className="text-2xl font-bold">{formatMoney(totalUnitario)}</p>
           </div>
           <span
             className={`text-sm font-semibold px-2 py-0.5 rounded-full ${
@@ -66,11 +66,18 @@ export default function SummaryPanel({
         {rows.map((r) => (
           <div key={r.label}>
             <div className="flex justify-between text-xs font-semibold mb-1">
-              <span className="uppercase tracking-wider text-muted-foreground">{r.label}</span>
+              <span className="uppercase tracking-wider text-muted-foreground">
+                {r.label} · {r.basis === "lot" ? "Por lote" : "Por unidad"}
+              </span>
               <span className="text-foreground">
-                ${fmt(r.value)} ({r.pct.toFixed(0)}%)
+                {formatMoney(r.value)} ({formatPercent(r.pct)})
               </span>
             </div>
+            {r.basis === "lot" && (
+              <p className="mb-1 text-[11px] text-muted-foreground">
+                Total lote: {formatMoney(r.lotValue)} dividido entre las unidades.
+              </p>
+            )}
             <div className="w-full h-2 rounded-full bg-muted">
               <div
                 className="cost-bar"

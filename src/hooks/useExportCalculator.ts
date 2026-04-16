@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
+import { parseMoney } from "@/lib/currency";
 
 export type Categoria = "moda" | "belleza";
 export type ModeloLogistico = "FBA" | "FBM";
@@ -134,43 +135,44 @@ function clearSavedForm() {
   }
 }
 
-const n = (v: string) => {
-  const num = parseFloat(v);
-  return isNaN(num) || num < 0 ? 0 : num;
-};
-
 export function calculateTotals(form: FormData) {
-  const units = Math.max(1, Math.floor(n(form.unidades)) || 1);
+  const units = Math.max(1, Math.floor(parseMoney(form.unidades)) || 1);
+  const money = parseMoney;
 
-  const subtotalProducto = n(form.costoUnitario) + n(form.empaqueUnitario);
+  const subtotalProducto = money(form.costoUnitario) + money(form.empaqueUnitario);
+  const subtotalProductoLote = subtotalProducto * units;
 
-  const subtotalExportacion =
-    (n(form.fedex) +
-      n(form.transporteInt) +
-      n(form.seguros) +
-      n(form.aranceles) +
-      n(form.nacionalizacion) +
-      n(form.agenciaAduana) +
-      n(form.otrosExportacion)) / units;
+  const subtotalExportacionLote =
+    money(form.fedex) +
+    money(form.transporteInt) +
+    money(form.seguros) +
+    money(form.aranceles) +
+    money(form.nacionalizacion) +
+    money(form.agenciaAduana) +
+    money(form.otrosExportacion);
+  const subtotalExportacion = subtotalExportacionLote / units;
 
-  const subtotalImportacion =
-    (n(form.etiquetadoCompliance) +
-      n(form.documentacion) +
-      n(form.inspeccion) +
-      n(form.otrosImportacion)) / units;
+  const subtotalImportacionLote =
+    money(form.etiquetadoCompliance) +
+    money(form.documentacion) +
+    money(form.inspeccion) +
+    money(form.otrosImportacion);
+  const subtotalImportacion = subtotalImportacionLote / units;
 
-  const subtotalCategoria =
+  const subtotalCategoriaLote =
     form.categoria === "moda"
-      ? (n(form.etiquetadoTextil) + n(form.instruccionesCuidado)) / units
-      : (n(form.regulacionCosmetica) + n(form.controlLote)) / units;
+      ? money(form.etiquetadoTextil) + money(form.instruccionesCuidado)
+      : money(form.regulacionCosmetica) + money(form.controlLote);
+  const subtotalCategoria = subtotalCategoriaLote / units;
 
-  const subtotalLogistica =
-    n(form.almacenamiento) +
-    n(form.pickingPacking) +
-    n(form.inbound) +
-    n(form.transporteInterno) +
-    n(form.devoluciones) +
-    n(form.otrosLogistica);
+  const subtotalLogisticaLote =
+    money(form.almacenamiento) +
+    money(form.pickingPacking) +
+    money(form.inbound) +
+    money(form.transporteInterno) +
+    money(form.devoluciones) +
+    money(form.otrosLogistica);
+  const subtotalLogistica = subtotalLogisticaLote / units;
 
   const totalUnitario =
     subtotalProducto +
@@ -180,7 +182,7 @@ export function calculateTotals(form: FormData) {
     subtotalLogistica;
 
   const totalLote = totalUnitario * units;
-  const precioRef = n(form.precioReferencia);
+  const precioRef = money(form.precioReferencia);
   const margen =
     precioRef > 0 ? ((precioRef - totalUnitario) / precioRef) * 100 : 0;
 
@@ -189,10 +191,15 @@ export function calculateTotals(form: FormData) {
   return {
     units,
     subtotalProducto,
+    subtotalProductoLote,
     subtotalExportacion,
+    subtotalExportacionLote,
     subtotalImportacion,
+    subtotalImportacionLote,
     subtotalCategoria,
+    subtotalCategoriaLote,
     subtotalLogistica,
+    subtotalLogisticaLote,
     totalUnitario,
     totalLote,
     margen,
