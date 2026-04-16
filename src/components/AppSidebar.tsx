@@ -1,10 +1,12 @@
-import { Calculator, Shirt, Sparkles, Settings } from "lucide-react";
+import { Calculator } from "lucide-react";
 
 const nav = [
-  { icon: Calculator, label: "Simulador", active: true },
-  { icon: Shirt, label: "Moda", active: false },
-  { icon: Sparkles, label: "Belleza", active: false },
-  { icon: Settings, label: "Configuración", active: false },
+  {
+    icon: Calculator,
+    label: "Simulador",
+    description: "Dashboard principal para calcular costos y margen.",
+    active: true,
+  },
 ];
 
 export default function AppSidebar() {
@@ -12,20 +14,22 @@ export default function AppSidebar() {
     <aside className="hidden lg:flex flex-col w-56 bg-sidebar-bg text-sidebar-fg min-h-screen p-5 shrink-0">
       <div className="mb-8">
         <h2 className="text-primary-foreground font-bold text-sm">Exportador Pro</h2>
-        <p className="text-[11px] opacity-50 uppercase tracking-wider mt-0.5">Plan Premium</p>
       </div>
       <nav className="flex-1 space-y-1">
         {nav.map((item) => (
           <button
             key={item.label}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            className={`w-full flex items-start gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
               item.active
                 ? "bg-[hsl(var(--sidebar-active)/0.15)] text-[hsl(var(--sidebar-active))] border-l-2 border-[hsl(var(--sidebar-active))]"
                 : "hover:bg-[hsl(var(--sidebar-active)/0.08)] text-sidebar-fg"
             }`}
           >
-            <item.icon size={18} />
-            {item.label}
+            <item.icon size={18} className="mt-0.5 shrink-0" />
+            <span>
+              <span className="block text-sm font-medium">{item.label}</span>
+              <span className="block text-[11px] leading-snug opacity-60 mt-0.5">{item.description}</span>
+            </span>
           </button>
         ))}
       </nav>

@@ -13,12 +13,20 @@ interface SummaryPanelProps {
   margen: number;
   rows: CostRow[];
   onReset: () => void;
+  onExportPdf: () => void;
 }
 
 const fmt = (v: number) =>
   v.toLocaleString("es-CO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-export default function SummaryPanel({ totalLote, totalUnitario, margen, rows, onReset }: SummaryPanelProps) {
+export default function SummaryPanel({
+  totalLote,
+  totalUnitario,
+  margen,
+  rows,
+  onReset,
+  onExportPdf,
+}: SummaryPanelProps) {
   return (
     <div className="space-y-5">
       {/* Main summary */}
@@ -87,6 +95,14 @@ export default function SummaryPanel({ totalLote, totalUnitario, margen, rows, o
           </div>
         </div>
       )}
+
+      {/* Export */}
+      <button
+        onClick={onExportPdf}
+        className="w-full flex items-center justify-center gap-2 h-11 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity text-sm font-medium"
+      >
+        <FileDown size={15} /> Exportar PDF
+      </button>
 
       {/* Reset */}
       <button

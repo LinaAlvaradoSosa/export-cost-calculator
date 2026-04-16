@@ -5,6 +5,7 @@ import SectionCard from "@/components/SectionCard";
 import CostField from "@/components/CostField";
 import SummaryPanel from "@/components/SummaryPanel";
 import { useExportCalculator, Categoria, ModeloLogistico } from "@/hooks/useExportCalculator";
+import { exportCalculationPdf } from "@/lib/pdf";
 
 export default function Index() {
   const { form, update, reset, calc } = useExportCalculator();
@@ -16,6 +17,10 @@ export default function Index() {
     { label: "Categoría", value: calc.subtotalCategoria, pct: calc.pctCategoria, color: "hsl(280,60%,55%)" },
     { label: "Logística USA", value: calc.subtotalLogistica, pct: calc.pctLogistica, color: "hsl(350,70%,55%)" },
   ];
+
+  const handleExportPdf = () => {
+    void exportCalculationPdf({ form, calc, rows: costRows });
+  };
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -38,30 +43,61 @@ export default function Index() {
                 <SectionCard icon={<Info size={18} />} title="Información General">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="field-label">Nombre de la Empresa</label>
-                      <input className="field-input" placeholder="Ej. Textiles de Colombia" value={form.empresa} onChange={(e) => update("empresa", e.target.value)} />
+                    <label htmlFor="empresa" className="field-label">Nombre de la Empresa</label>
+                      <input
+                        id="empresa"
+                        className="field-input"
+                        placeholder="Ej. Textiles de Colombia"
+                        value={form.empresa}
+                        onChange={(e) => update("empresa", e.target.value)}
+                      />
                     </div>
                     <div>
-                      <label className="field-label">Producto</label>
-                      <input className="field-input" placeholder="Ej. Camisetas Algodón" value={form.producto} onChange={(e) => update("producto", e.target.value)} />
+                    <label htmlFor="producto" className="field-label">Producto</label>
+                      <input
+                        id="producto"
+                        className="field-input"
+                        placeholder="Ej. Camisetas Algodón"
+                        value={form.producto}
+                        onChange={(e) => update("producto", e.target.value)}
+                      />
                     </div>
                     <div>
-                      <label className="field-label">Categoría</label>
-                      <select className="field-input" value={form.categoria} onChange={(e) => update("categoria", e.target.value as Categoria)}>
+                    <label htmlFor="categoria" className="field-label">Categoría</label>
+                      <select
+                        id="categoria"
+                        className="field-input"
+                        value={form.categoria}
+                        onChange={(e) => update("categoria", e.target.value as Categoria)}
+                      >
                         <option value="moda">Moda (Textiles/Accesorios)</option>
                         <option value="belleza">Productos de Belleza</option>
                       </select>
                     </div>
                     <div>
-                      <label className="field-label">Modelo Logístico</label>
-                      <select className="field-input" value={form.modelo} onChange={(e) => update("modelo", e.target.value as ModeloLogistico)}>
+                    <label htmlFor="modelo" className="field-label">Modelo Logístico</label>
+                      <select
+                        id="modelo"
+                        className="field-input"
+                        value={form.modelo}
+                        onChange={(e) => update("modelo", e.target.value as ModeloLogistico)}
+                      >
                         <option value="FBA">FBA (Amazon)</option>
                         <option value="FBM">FBM (Fulfillment propio)</option>
                       </select>
                     </div>
                     <div>
-                      <label className="field-label">Unidades</label>
-                      <input type="number" min="1" step="1" className="field-input" placeholder="500" value={form.unidades} onChange={(e) => update("unidades", e.target.value)} />
+                    <label htmlFor="unidades" className="field-label">Unidades</label>
+                        <input
+                          id="unidades"
+                          type="number"
+                          min="1"
+                          step="1"
+                          className="field-input"
+                          placeholder="500"
+                          value={form.unidades}
+                          onChange={(e) => update("unidades", e.target.value)}
+                        />
                     </div>
                   </div>
                 </SectionCard>
@@ -139,6 +175,7 @@ export default function Index() {
                   margen={calc.margen}
                   rows={costRows}
                   onReset={reset}
+                  onExportPdf={handleExportPdf}
                 />
               </div>
             </div>
