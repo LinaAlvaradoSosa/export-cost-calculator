@@ -57,7 +57,7 @@ describe("Index - UI calculadora", () => {
     render(<Index />);
   
     const costoInput = screen.getByLabelText(/Costo Unitario/i);
-    const fedexInput = screen.getByLabelText(/FedEx \/ Courier/i);
+    const fedexInput = screen.getByLabelText(/FedEx \/ Mensajería/i);
   
     await user.type(costoInput, "10");
     await user.type(fedexInput, "5");

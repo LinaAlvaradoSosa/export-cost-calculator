@@ -4,7 +4,7 @@ const nav = [
   {
     icon: Calculator,
     label: "Simulador",
-    description: "Dashboard principal para calcular costos y margen.",
+    description: "Panel principal para calcular costos y margen.",
     active: true,
   },
 ];

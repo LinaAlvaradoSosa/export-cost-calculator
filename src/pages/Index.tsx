@@ -45,7 +45,7 @@ export default function Index() {
       basis: "lot" as const,
     },
     {
-      label: "Logística USA",
+      label: "Logística EE. UU.",
       value: calc.subtotalLogistica,
       lotValue: calc.subtotalLogisticaLote,
       pct: calc.pctLogistica,
@@ -118,8 +118,8 @@ export default function Index() {
                         value={form.modelo}
                         onChange={(e) => update("modelo", e.target.value as ModeloLogistico)}
                       >
-                        <option value="FBA">FBA (Amazon)</option>
-                        <option value="FBM">FBM (Fulfillment propio)</option>
+                        <option value="FBA">FBA (gestionado por Amazon)</option>
+                        <option value="FBM">FBM (gestionado por el vendedor)</option>
                       </select>
                     </div>
                     <div>
@@ -150,7 +150,7 @@ export default function Index() {
                 {/* 3. Exportación */}
                 <SectionCard icon={<Truck size={18} />} title="Costos de Exportación (por lote)">
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    <CostField label="FedEx / Courier" value={form.fedex} onChange={(v) => update("fedex", v)} suffix={currencySuffix} helperText="Total del envío/lote." />
+                    <CostField label="FedEx / Mensajería" value={form.fedex} onChange={(v) => update("fedex", v)} suffix={currencySuffix} helperText="Total del envío/lote." />
                     <CostField label="Transporte Int." value={form.transporteInt} onChange={(v) => update("transporteInt", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Seguros" value={form.seguros} onChange={(v) => update("seguros", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Aranceles" value={form.aranceles} onChange={(v) => update("aranceles", v)} suffix={currencySuffix} helperText="Total del lote." />
@@ -162,10 +162,10 @@ export default function Index() {
                   </div>
                 </SectionCard>
 
-                {/* 4. Compliance USA */}
-                <SectionCard icon={<ShieldCheck size={18} />} title="Compliance USA (por lote)">
+                {/* 4. Cumplimiento en EE. UU. */}
+                <SectionCard icon={<ShieldCheck size={18} />} title="Cumplimiento en EE. UU. (por lote)">
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    <CostField label="Etiquetado Compliance (FDA/FTC)" value={form.etiquetadoCompliance} onChange={(v) => update("etiquetadoCompliance", v)} suffix={currencySuffix} helperText="Total del lote." />
+                    <CostField label="Etiquetado normativo (FDA/FTC)" value={form.etiquetadoCompliance} onChange={(v) => update("etiquetadoCompliance", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Documentación & Certificados" value={form.documentacion} onChange={(v) => update("documentacion", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Inspección" value={form.inspeccion} onChange={(v) => update("inspeccion", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Otros Costos Importación" value={form.otrosImportacion} onChange={(v) => update("otrosImportacion", v)} suffix={currencySuffix} helperText="Total del lote." />
@@ -190,12 +190,12 @@ export default function Index() {
                   )}
                 </SectionCard>
 
-                {/* 6. Logística USA */}
-                <SectionCard icon={<Warehouse size={18} />} title="Logística & Fulfillment USA (por lote)">
+                {/* 6. Logística en EE. UU. */}
+                <SectionCard icon={<Warehouse size={18} />} title="Logística y gestión en EE. UU. (por lote)">
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <CostField label="Almacenamiento (Mes)" value={form.almacenamiento} onChange={(v) => update("almacenamiento", v)} suffix={currencySuffix} helperText="Total del lote." />
-                    <CostField label="Picking / Packing" value={form.pickingPacking} onChange={(v) => update("pickingPacking", v)} suffix={currencySuffix} helperText="Total del lote." />
-                    <CostField label="Inbound Ship" value={form.inbound} onChange={(v) => update("inbound", v)} suffix={currencySuffix} helperText="Total del lote." />
+                    <CostField label="Preparación y empaque" value={form.pickingPacking} onChange={(v) => update("pickingPacking", v)} suffix={currencySuffix} helperText="Total del lote." />
+                    <CostField label="Envío entrante" value={form.inbound} onChange={(v) => update("inbound", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Transporte Local" value={form.transporteInterno} onChange={(v) => update("transporteInterno", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Devoluciones" value={form.devoluciones} onChange={(v) => update("devoluciones", v)} suffix={currencySuffix} helperText="Total del lote." />
                     <CostField label="Otros Logística" value={form.otrosLogistica} onChange={(v) => update("otrosLogistica", v)} suffix={currencySuffix} helperText="Total del lote." />
