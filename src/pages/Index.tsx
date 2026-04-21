@@ -274,6 +274,9 @@ export default function Index() {
                 {/* 6. Logística en EE. UU. */}
                 <SectionCard icon={<Warehouse size={18} />} title="Logística y gestión en EE. UU">
                   <div className="grid grid-cols-1 min-[520px]:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <CostField label="In/Out" value={form.inOut} onChange={(v) => update("inOut", v)} suffix={currencySuffix} helperText="Costo asociado al ingreso y salida de mercancía dentro de la operación logística en EE. UU." />
+                    <CostField label="Sorting" value={form.sorting} onChange={(v) => update("sorting", v)} suffix={currencySuffix} helperText="Costo de clasificación, separación o acomodo del inventario dentro del centro logístico." />
+                    <CostField label="Fee mensual" value={form.feeMensual} onChange={(v) => update("feeMensual", v)} suffix={currencySuffix} helperText="Cargo fijo o tarifa mensual del operador logístico por administrar el servicio o la cuenta." />
                     <CostField label="Almacenamiento" value={form.almacenamiento} onChange={(v) => update("almacenamiento", v)} suffix={currencySuffix} helperText="Costo estimado de bodegaje o almacenamiento del inventario en EE. UU. durante un periodo mensual." />
                     <CostField label="Picking and Packing" value={form.pickingPacking} onChange={(v) => update("pickingPacking", v)} suffix={currencySuffix} helperText="Costo de preparación del pedido: alistamiento, empaque y manipulación dentro del centro logístico." />
                     <CostField label="Envío entrante" value={form.inbound} onChange={(v) => update("inbound", v)} suffix={currencySuffix} helperText="Costo de mover el lote desde el punto de llegada hasta la bodega o centro de fulfillment." />

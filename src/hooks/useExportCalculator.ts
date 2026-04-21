@@ -34,6 +34,9 @@ export interface FormData {
   instruccionesCuidado: string;
   regulacionCosmetica: string;
   controlLote: string;
+  inOut: string;
+  sorting: string;
+  feeMensual: string;
   almacenamiento: string;
   pickingPacking: string;
   inbound: string;
@@ -71,6 +74,9 @@ export const initialData: FormData = {
   instruccionesCuidado: "",
   regulacionCosmetica: "",
   controlLote: "",
+  inOut: "",
+  sorting: "",
+  feeMensual: "",
   almacenamiento: "",
   pickingPacking: "",
   inbound: "",
@@ -185,6 +191,9 @@ export function calculateTotals(form: FormData) {
   const subtotalCategoria = subtotalCategoriaLote / units;
 
   const subtotalLogisticaLote =
+    money(form.inOut) +
+    money(form.sorting) +
+    money(form.feeMensual) +
     money(form.almacenamiento) +
     money(form.pickingPacking) +
     money(form.inbound) +

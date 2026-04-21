@@ -51,10 +51,13 @@ describe("Index - UI calculadora", () => {
     const productoInput = screen.getByLabelText(/^Producto$/i);
     const unidadesInput = screen.getByLabelText(/Unidades/i);
     const unidadMedidaSelect = screen.getByLabelText(/Unidad de Medida/i);
-    const pesoInput = screen.getByLabelText(/Peso \(Kg\)/i);
-    const altoInput = screen.getByLabelText(/Alto \(cm\)/i);
-    const anchoInput = screen.getByLabelText(/Ancho \(cm\)/i);
-    const largoInput = screen.getByLabelText(/Largo \(cm\)/i);
+    const pesoInput = screen.getByLabelText(/^Peso$/i);
+    const altoInput = screen.getByLabelText(/^Alto$/i);
+    const anchoInput = screen.getByLabelText(/^Ancho$/i);
+    const largoInput = screen.getByLabelText(/^Largo$/i);
+    const inOutInput = screen.getByLabelText(/In\/Out/i);
+    const sortingInput = screen.getByLabelText(/Sorting/i);
+    const feeMensualInput = screen.getByLabelText(/Fee mensual/i);
 
     await user.type(empresaInput, "Mi Empresa");
     await user.type(productoInput, "Labial");
@@ -65,6 +68,9 @@ describe("Index - UI calculadora", () => {
     await user.type(altoInput, "120");
     await user.type(anchoInput, "80");
     await user.type(largoInput, "100");
+    await user.type(inOutInput, "25");
+    await user.type(sortingInput, "10");
+    await user.type(feeMensualInput, "40");
 
     expect(empresaInput).toHaveValue("Mi Empresa");
     expect(productoInput).toHaveValue("Labial");
@@ -74,6 +80,9 @@ describe("Index - UI calculadora", () => {
     expect(altoInput).toHaveValue(120);
     expect(anchoInput).toHaveValue(80);
     expect(largoInput).toHaveValue(100);
+    expect(inOutInput).toHaveValue(25);
+    expect(sortingInput).toHaveValue(10);
+    expect(feeMensualInput).toHaveValue(40);
   });
   it("actualiza el resumen cuando el usuario ingresa costos", async () => {
     const user = userEvent.setup();
