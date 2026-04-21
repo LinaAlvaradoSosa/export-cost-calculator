@@ -160,7 +160,7 @@ export default function Index() {
                       </select>
                     </div>
                     <div>
-                    <FieldLabel htmlFor="peso-kg" label="Peso (Kg)" tooltip={fieldTips.pesoKg} />
+                    <FieldLabel htmlFor="peso-kg" label="Peso" tooltip={fieldTips.pesoKg} />
                         <input
                           id="peso-kg"
                           type="number"
@@ -173,7 +173,7 @@ export default function Index() {
                         />
                     </div>
                     <div>
-                    <FieldLabel htmlFor="alto-cm" label="Alto (cm)" tooltip={fieldTips.altoCm} />
+                    <FieldLabel htmlFor="alto-cm" label="Alto" tooltip={fieldTips.altoCm} />
                         <input
                           id="alto-cm"
                           type="number"
@@ -186,7 +186,7 @@ export default function Index() {
                         />
                     </div>
                     <div>
-                    <FieldLabel htmlFor="ancho-cm" label="Ancho (cm)" tooltip={fieldTips.anchoCm} />
+                    <FieldLabel htmlFor="ancho-cm" label="Ancho" tooltip={fieldTips.anchoCm} />
                         <input
                           id="ancho-cm"
                           type="number"
@@ -199,7 +199,7 @@ export default function Index() {
                         />
                     </div>
                     <div>
-                    <FieldLabel htmlFor="largo-cm" label="Largo (cm)" tooltip={fieldTips.largoCm} />
+                    <FieldLabel htmlFor="largo-cm" label="Largo" tooltip={fieldTips.largoCm} />
                         <input
                           id="largo-cm"
                           type="number"
@@ -274,7 +274,7 @@ export default function Index() {
                 {/* 6. Logística en EE. UU. */}
                 <SectionCard icon={<Warehouse size={18} />} title="Logística y gestión en EE. UU">
                   <div className="grid grid-cols-1 min-[520px]:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <CostField label="Almacenamiento (Mes)" value={form.almacenamiento} onChange={(v) => update("almacenamiento", v)} suffix={currencySuffix} helperText="Costo estimado de bodegaje o almacenamiento del inventario en EE. UU. durante un periodo mensual." />
+                    <CostField label="Almacenamiento" value={form.almacenamiento} onChange={(v) => update("almacenamiento", v)} suffix={currencySuffix} helperText="Costo estimado de bodegaje o almacenamiento del inventario en EE. UU. durante un periodo mensual." />
                     <CostField label="Picking and Packing" value={form.pickingPacking} onChange={(v) => update("pickingPacking", v)} suffix={currencySuffix} helperText="Costo de preparación del pedido: alistamiento, empaque y manipulación dentro del centro logístico." />
                     <CostField label="Envío entrante" value={form.inbound} onChange={(v) => update("inbound", v)} suffix={currencySuffix} helperText="Costo de mover el lote desde el punto de llegada hasta la bodega o centro de fulfillment." />
                     <CostField label="Transporte Local" value={form.transporteInterno} onChange={(v) => update("transporteInterno", v)} suffix={currencySuffix} helperText="Traslados internos en EE. UU. entre bodega, operador logístico, cliente o marketplace." />
