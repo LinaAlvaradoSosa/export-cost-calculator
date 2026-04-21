@@ -58,7 +58,7 @@ export default function SummaryPanel({
     <div className="space-y-5">
       {/* Main summary */}
       <div className="summary-card space-y-5">
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col items-start gap-3 xl:flex-row xl:items-start xl:justify-between">
           <h3 className="text-sm font-semibold flex items-center gap-2 opacity-90">
             <FileDown size={16} /> Resumen de Inversión
           </h3>
@@ -66,7 +66,7 @@ export default function SummaryPanel({
             {healthTone.label}
           </span>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 2xl:grid-cols-2">
           <div>
             <p className="text-[11px] opacity-75 uppercase tracking-wider">Costo Total por Lote</p>
             <p className="mt-1 text-3xl font-extrabold">
@@ -78,7 +78,7 @@ export default function SummaryPanel({
             <p className="mt-1 text-3xl font-extrabold">{formatMoney(totalUnitario)}</p>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 2xl:grid-cols-2">
           <div className="rounded-lg border border-white/15 bg-white/10 p-3">
             <p className="text-[11px] uppercase tracking-wider opacity-75">Ganancia por Unidad</p>
             <p className="mt-1 text-xl font-bold">{formatMoney(gananciaUnitario)}</p>
@@ -96,7 +96,7 @@ export default function SummaryPanel({
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/15 pt-4">
+        <div className="flex flex-col items-start gap-3 border-t border-white/15 pt-4 xl:flex-row xl:items-center xl:justify-between">
           <div>
             <p className="text-[11px] opacity-75 uppercase tracking-wider">Margen estimado</p>
             <p className="mt-1 text-2xl font-bold">{margen.toFixed(1)}%</p>
