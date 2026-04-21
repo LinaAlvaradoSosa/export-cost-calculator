@@ -1,3 +1,5 @@
+import FieldLabel from "@/components/FieldLabel";
+
 interface CostFieldProps {
   id?: string;
   label: string;
@@ -7,6 +9,7 @@ interface CostFieldProps {
   suffix?: string;
   placeholder?: string;
   helperText?: string;
+  tooltip?: string;
 }
 
 export default function CostField({
@@ -18,6 +21,7 @@ export default function CostField({
   suffix,
   placeholder = "0",
   helperText,
+  tooltip,
 }: CostFieldProps) {
   const inputId =
     id ??
@@ -30,9 +34,9 @@ export default function CostField({
 
   return (
     <div className="flex-1 min-w-[140px]">
-      <label htmlFor={inputId} className="field-label">
-        {label}
-      </label>
+      <div className="min-h-[2.5rem] flex items-start">
+        <FieldLabel htmlFor={inputId} label={label} tooltip={tooltip ?? helperText} />
+      </div>
       <div className="relative">
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
           {prefix}
@@ -53,7 +57,6 @@ export default function CostField({
           </span>
         )}
       </div>
-      {helperText && <p className="mt-1 text-[11px] leading-snug text-muted-foreground">{helperText}</p>}
     </div>
   );
 }

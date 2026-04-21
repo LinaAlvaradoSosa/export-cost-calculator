@@ -3,13 +3,19 @@ import { parseMoney } from "@/lib/currency";
 
 export type Categoria = "moda" | "belleza";
 export type ModeloLogistico = "FBA" | "FBM";
+export type UnidadMedida = "caja" | "paquete" | "pallet";
 
 export interface FormData {
   empresa: string;
   producto: string;
   categoria: Categoria;
   modelo: ModeloLogistico;
+  unidadMedida: UnidadMedida;
   unidades: string;
+  pesoKg: string;
+  altoCm: string;
+  anchoCm: string;
+  largoCm: string;
   costoUnitario: string;
   precioReferencia: string;
   empaqueUnitario: string;
@@ -41,7 +47,12 @@ export const initialData: FormData = {
   producto: "",
   categoria: "moda",
   modelo: "FBA",
+  unidadMedida: "caja",
   unidades: "",
+  pesoKg: "",
+  altoCm: "",
+  anchoCm: "",
+  largoCm: "",
   costoUnitario: "",
   precioReferencia: "",
   empaqueUnitario: "",
@@ -76,6 +87,9 @@ const isCategoria = (value: unknown): value is Categoria =>
 const isModeloLogistico = (value: unknown): value is ModeloLogistico =>
   value === "FBA" || value === "FBM";
 
+const isUnidadMedida = (value: unknown): value is UnidadMedida =>
+  value === "caja" || value === "paquete" || value === "pallet";
+
 function normalizeSavedForm(value: unknown): FormData | null {
   if (!value || typeof value !== "object") return null;
 
@@ -93,6 +107,11 @@ function normalizeSavedForm(value: unknown): FormData | null {
 
     if (field === "modelo") {
       normalized[field] = isModeloLogistico(savedValue) ? savedValue : initialData[field];
+      return;
+    }
+
+    if (field === "unidadMedida") {
+      normalized[field] = isUnidadMedida(savedValue) ? savedValue : initialData[field];
       return;
     }
 
@@ -185,6 +204,12 @@ export function calculateTotals(form: FormData) {
   const precioRef = money(form.precioReferencia);
   const margen =
     precioRef > 0 ? ((precioRef - totalUnitario) / precioRef) * 100 : 0;
+  const gananciaUnitario = precioRef - totalUnitario;
+  const gananciaLote = gananciaUnitario * units;
+  const ratioExportacionVenta =
+    precioRef > 0 ? (subtotalExportacion / precioRef) * 100 : 0;
+  const ratioLogisticaVenta =
+    precioRef > 0 ? (subtotalLogistica / precioRef) * 100 : 0;
 
   const pct = (v: number) => (totalUnitario > 0 ? (v / totalUnitario) * 100 : 0);
 
@@ -203,6 +228,11 @@ export function calculateTotals(form: FormData) {
     totalUnitario,
     totalLote,
     margen,
+    gananciaUnitario,
+    gananciaLote,
+    precioRef,
+    ratioExportacionVenta,
+    ratioLogisticaVenta,
     pctProducto: pct(subtotalProducto),
     pctExportacion: pct(subtotalExportacion),
     pctImportacion: pct(subtotalImportacion),
