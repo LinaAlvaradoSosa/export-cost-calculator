@@ -144,35 +144,6 @@ export default function SummaryPanel({
         ))}
       </div>
 
-      {/* Tip */}
-      {margen < 20 && margen > 0 && (
-        <div className="section-card bg-warning/5 border-warning/20">
-          <div className="flex gap-2">
-            <span className="text-lg">💡</span>
-            <div>
-              <p className="text-sm font-semibold text-foreground">Tip del Experto</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Tu margen es bajo. Considera consolidar carga o negociar tarifas de transporte para mejorar tu rentabilidad.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {margen <= 0 && (
-        <div className="section-card bg-destructive/5 border-destructive/20">
-          <div className="flex gap-2">
-            <span className="text-lg">!</span>
-            <div>
-              <p className="text-sm font-semibold text-foreground">Alerta de rentabilidad</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                El costo unitario ya supera o iguala el precio de venta. Revisa precio, producto o gastos logísticos antes de seguir.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Export */}
       <button
         onClick={onExportPdf}
