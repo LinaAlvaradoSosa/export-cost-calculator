@@ -128,6 +128,10 @@ export async function exportCalculationPdf({ form, calc, rows }: ExportCalculati
     [
       ["Empresa", fmtText(form.empresa)],
       ["Producto", fmtText(form.producto)],
+      ["Pais de origen", fmtText(form.paisOrigen)],
+      ["Ciudad de origen", fmtText(form.ciudadOrigen)],
+      ["Pais de destino", fmtText(form.paisDestino)],
+      ["Ciudad de destino", fmtText(form.ciudadDestino)],
       ["Categoria", form.categoria === "moda" ? "Moda" : "Belleza"],
       ["Modelo logistico", form.modelo === "FBA" ? "Gestionado por Amazon" : "Gestionado por el vendedor"],
       ["Moneda", "USD"],

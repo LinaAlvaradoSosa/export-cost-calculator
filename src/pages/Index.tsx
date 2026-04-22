@@ -13,6 +13,10 @@ export default function Index() {
   const fieldTips = {
     empresa: "Nombre comercial o razón social del exportador.",
     producto: "Nombre del producto que estás evaluando para exportación.",
+    paisOrigen: "País desde el cual sale la mercancía para esta operación.",
+    ciudadOrigen: "Ciudad de despacho o punto de salida del producto.",
+    paisDestino: "País al que llegará la mercancía en esta exportación.",
+    ciudadDestino: "Ciudad de recepción o destino final del embarque.",
     categoria: "Define qué bloque regulatorio y de categoría aplica al cálculo.",
     modelo: "Selecciona si la gestión logística la hace Amazon o el vendedor.",
     unidades: "Cantidad total de unidades incluidas en el lote.",
@@ -107,6 +111,46 @@ export default function Index() {
                         placeholder="Ej. Camisetas Algodón"
                         value={form.producto}
                         onChange={(e) => update("producto", e.target.value)}
+                      />
+                    </div>
+                    <div>
+                    <FieldLabel htmlFor="pais-origen" label="País de Origen" tooltip={fieldTips.paisOrigen} />
+                      <input
+                        id="pais-origen"
+                        className="field-input"
+                        placeholder="Ej. Colombia"
+                        value={form.paisOrigen}
+                        onChange={(e) => update("paisOrigen", e.target.value)}
+                      />
+                    </div>
+                    <div>
+                    <FieldLabel htmlFor="ciudad-origen" label="Ciudad de Origen" tooltip={fieldTips.ciudadOrigen} />
+                      <input
+                        id="ciudad-origen"
+                        className="field-input"
+                        placeholder="Ej. Bogotá"
+                        value={form.ciudadOrigen}
+                        onChange={(e) => update("ciudadOrigen", e.target.value)}
+                      />
+                    </div>
+                    <div>
+                    <FieldLabel htmlFor="pais-destino" label="País de destino" tooltip={fieldTips.paisDestino} />
+                      <input
+                        id="pais-destino"
+                        className="field-input"
+                        placeholder="Ej. Estados Unidos"
+                        value={form.paisDestino}
+                        onChange={(e) => update("paisDestino", e.target.value)}
+                      />
+                    </div>
+                    <div>
+                    <FieldLabel htmlFor="ciudad-destino" label="Ciudad de destino" tooltip={fieldTips.ciudadDestino} />
+                      <input
+                        id="ciudad-destino"
+                        className="field-input"
+                        placeholder="Ej. Miami"
+                        value={form.ciudadDestino}
+                        onChange={(e) => update("ciudadDestino", e.target.value)}
                       />
                     </div>
                     <div>

@@ -8,6 +8,10 @@ export type UnidadMedida = "caja" | "paquete" | "pallet";
 export interface FormData {
   empresa: string;
   producto: string;
+  paisOrigen: string;
+  ciudadOrigen: string;
+  paisDestino: string;
+  ciudadDestino: string;
   categoria: Categoria;
   modelo: ModeloLogistico;
   unidadMedida: UnidadMedida;
@@ -48,6 +52,10 @@ export interface FormData {
 export const initialData: FormData = {
   empresa: "",
   producto: "",
+  paisOrigen: "",
+  ciudadOrigen: "",
+  paisDestino: "",
+  ciudadDestino: "",
   categoria: "moda",
   modelo: "FBA",
   unidadMedida: "caja",

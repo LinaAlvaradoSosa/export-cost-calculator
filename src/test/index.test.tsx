@@ -49,6 +49,10 @@ describe("Index - UI calculadora", () => {
 
     const empresaInput = screen.getByLabelText(/Nombre de la Empresa/i);
     const productoInput = screen.getByLabelText(/^Producto$/i);
+    const paisOrigenInput = screen.getByLabelText(/País de Origen/i);
+    const ciudadOrigenInput = screen.getByLabelText(/Ciudad de Origen/i);
+    const paisDestinoInput = screen.getByLabelText(/País de destino/i);
+    const ciudadDestinoInput = screen.getByLabelText(/Ciudad de destino/i);
     const unidadesInput = screen.getByLabelText(/Unidades/i);
     const unidadMedidaSelect = screen.getByLabelText(/Unidad de Medida/i);
     const pesoInput = screen.getByLabelText(/^Peso$/i);
@@ -61,6 +65,10 @@ describe("Index - UI calculadora", () => {
 
     await user.type(empresaInput, "Mi Empresa");
     await user.type(productoInput, "Labial");
+    await user.type(paisOrigenInput, "Colombia");
+    await user.type(ciudadOrigenInput, "Bogotá");
+    await user.type(paisDestinoInput, "Estados Unidos");
+    await user.type(ciudadDestinoInput, "Miami");
     await user.clear(unidadesInput);
     await user.type(unidadesInput, "300");
     await user.selectOptions(unidadMedidaSelect, "pallet");
@@ -74,6 +82,10 @@ describe("Index - UI calculadora", () => {
 
     expect(empresaInput).toHaveValue("Mi Empresa");
     expect(productoInput).toHaveValue("Labial");
+    expect(paisOrigenInput).toHaveValue("Colombia");
+    expect(ciudadOrigenInput).toHaveValue("Bogotá");
+    expect(paisDestinoInput).toHaveValue("Estados Unidos");
+    expect(ciudadDestinoInput).toHaveValue("Miami");
     expect(unidadesInput).toHaveValue(300);
     expect(unidadMedidaSelect).toHaveValue("pallet");
     expect(pesoInput).toHaveValue(45);
